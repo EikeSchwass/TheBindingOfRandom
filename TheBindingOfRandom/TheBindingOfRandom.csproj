@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -56,9 +57,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CharacterModel.cs" />
+    <Compile Include="KeyCombinationChangedHandler.cs" />
+    <Compile Include="Keylogger.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="RandomizationModel.cs" />
-    <Compile Include="Savedata.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -93,7 +95,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
@@ -120,6 +122,10 @@
     <Resource Include="Images\magdalene.png" />
     <Resource Include="Images\samson.png" />
     <Resource Include="Images\thelost.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\bgl.png" />
+    <Resource Include="Images\bgr.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

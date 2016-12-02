@@ -6,47 +6,59 @@
         xmlns:local="clr-namespace:TheBindingOfRandom"
         xmlns:properties="clr-namespace:TheBindingOfRandom.Properties"
         mc:Ignorable="d"
-        Title="{Binding Path=Title, Source={x:Static properties:Settings.Default}}" Height="666" Width="1184" ResizeMode="NoResize" WindowStyle="ToolWindow" FontFamily="Consolas">
+        Title="{Binding Path=Title, Source={x:Static properties:Settings.Default}}" Height="666" SizeToContent="Width"  ResizeMode="NoResize" WindowStyle="ToolWindow" FontFamily="Consolas" Background="Black">
     <Window.DataContext>
         <local:RandomizationModel />
     </Window.DataContext>
-    <Window.Background>
-        <ImageBrush ImageSource="Images/bg.png" Stretch="Fill" />
-    </Window.Background>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <ListView VerticalAlignment="Center" HorizontalAlignment="Center" ItemsSource="{Binding Path=Characters}" Background="#aa000000">
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel IsItemsHost="True" Orientation="Horizontal" Background="Transparent" />
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <ListView.ItemTemplate>
-                <DataTemplate DataType="local:CharacterModel">
-                    <CheckBox HorizontalAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="White" Background="Black" Style="{DynamicResource ImageCheckBoxStyle}">
-                        <CheckBox.Resources>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="Text" Value="{Binding Text}" />
-                                <Setter Property="Foreground" Value="White" />
-                                <Setter Property="HorizontalAlignment" Value="Center" />
-                            </Style>
-                            <Style TargetType="Image">
-                                <Setter Property="Source" Value="{Binding Path=ImageSource}" />
-                                <Setter Property="HorizontalAlignment" Value="Center" />
-                                <Setter Property="Width" Value="56" />
-                                <Setter Property="Height" Value="66" />
-                                <Setter Property="Stretch" Value="Uniform" />
-                            </Style>
-                        </CheckBox.Resources>
-                    </CheckBox>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </Grid>
+    <DockPanel LastChildFill="True">
+        <Image DockPanel.Dock="Left" Source="Images/bgl.png" Stretch="Uniform" Margin="0,0,-200,0" />
+        <Image DockPanel.Dock="Right" Source="Images/bgr.png" Stretch="Uniform" Margin="-200,0,0,0" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <ListView VerticalAlignment="Top" HorizontalAlignment="Center" ItemsSource="{Binding Path=Characters}" Background="#cc000000" Margin="50">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel IsItemsHost="True" Orientation="Horizontal" Background="Transparent" />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate DataType="local:CharacterModel">
+                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="White" Background="Black" Style="{DynamicResource ImageCheckBoxStyle}">
+                            <CheckBox.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Text" Value="{Binding Text}" />
+                                    <Setter Property="Foreground" Value="White" />
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                                <Style TargetType="Image">
+                                    <Setter Property="Source" Value="{Binding Path=ImageSource}" />
+                                    <Setter Property="Opacity" Value="{Binding Path=DisabledOpacity}" />
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                    <Setter Property="Width" Value="56" />
+                                    <Setter Property="Height" Value="66" />
+                                    <Setter Property="Stretch" Value="Uniform" />
+                                </Style>
+                            </CheckBox.Resources>
+                        </CheckBox>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
+                <CheckBox Margin="5" IsChecked="{Binding PreventDuplicates}" Foreground="White" HorizontalAlignment="Center" BorderBrush="White" Background="Black">Prevent Duplicates</CheckBox>
+                <Button Content="Clear play history" Foreground="White" Background="Black" BorderBrush="White" Margin="5" Command="{Binding ClearPlayHistoryCommand}" />
+            </StackPanel>
+            <StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+                <TextBlock Text="Start Random with: " Foreground="White" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding StartKeyCombination}" Foreground="White" VerticalAlignment="Center" Width="80" />
+                <Button Content="Change" Foreground="White" Background="Black" BorderBrush="White" Margin="5" Command="{Binding KeyCombinationChangedCommand}" />
+            </StackPanel>
+        </Grid>
+    </DockPanel>
 </Window>

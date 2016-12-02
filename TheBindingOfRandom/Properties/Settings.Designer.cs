@@ -13,7 +13,7 @@ namespace TheBindingOfRandom.Properties {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+    public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
         
@@ -44,6 +44,42 @@ namespace TheBindingOfRandom.Properties {
             }
             set {
                 this["PlayedCharacters"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3071")]
+        public long SelectedCharacters {
+            get {
+                return ((long)(this["SelectedCharacters"]));
+            }
+            set {
+                this["SelectedCharacters"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool PreventDuplicates {
+            get {
+                return ((bool)(this["PreventDuplicates"]));
+            }
+            set {
+                this["PreventDuplicates"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Ctrl+Alt+R")]
+        public string StartKeyCombination {
+            get {
+                return ((string)(this["StartKeyCombination"]));
+            }
+            set {
+                this["StartKeyCombination"] = value;
             }
         }
     }

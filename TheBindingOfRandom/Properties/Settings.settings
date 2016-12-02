@@ -8,5 +8,14 @@
     <Setting Name="PlayedCharacters" Type="System.Int64" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
+    <Setting Name="SelectedCharacters" Type="System.Int64" Scope="User">
+      <Value Profile="(Default)">3071</Value>
+    </Setting>
+    <Setting Name="PreventDuplicates" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="StartKeyCombination" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Ctrl+Alt+R</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
