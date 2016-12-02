@@ -5,10 +5,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Input;
 using TheBindingOfRandom.Annotations;
 using TheBindingOfRandom.Properties;
-using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
 
 namespace TheBindingOfRandom
 {
@@ -16,6 +14,7 @@ namespace TheBindingOfRandom
     {
         private KeyCombinationChangedHandler keyCombinationChangedCommand;
         private bool preventDuplicates;
+        private bool startAfterSelection;
         private string startKeyCombination;
 
         public RandomizationModel()
@@ -23,6 +22,7 @@ namespace TheBindingOfRandom
             InitCharacters();
             PreventDuplicates = Settings.Default.PreventDuplicates;
             StartKeyCombination = Settings.Default.StartKeyCombination;
+            StartAfterSelection = Settings.Default.StartAfterSelection;
             KeyCombinationChangedCommand = new KeyCombinationChangedHandler(this);
             ClearPlayHistoryCommand = new ClearPlayHistoryCommand(this);
             Keylogger.KeyDown += Keylogger_KeyDown;
@@ -56,6 +56,20 @@ namespace TheBindingOfRandom
                     return;
                 preventDuplicates = value;
                 UpdateDuplicates();
+                OnPropertyChanged();
+            }
+        }
+
+        public bool StartAfterSelection
+        {
+            get { return startAfterSelection; }
+            set
+            {
+                if (value == startAfterSelection)
+                    return;
+                startAfterSelection = value;
+                Settings.Default.StartAfterSelection = startAfterSelection;
+                Settings.Default.Save();
                 OnPropertyChanged();
             }
         }
@@ -137,12 +151,19 @@ namespace TheBindingOfRandom
                     characterModel.WasPlayed = false;
                 }
             }
-            for (int i = 0; i < index + Characters.Count + 1 - 3; i++)
+            while (index < Characters.Count * 2 + 1)
+                index += Characters.Count + 1;
+            for (int i = 0; i < index; i++)
             {
                 Keylogger.PostKey(Keys.Right);
-                Task.Delay((i + 1) * 10).Wait();
+                Task.Delay(Math.Max(50, i * i / 4)).Wait();
             }
             NewPlayStarted?.Invoke(this, character);
+            if (StartAfterSelection)
+            {
+                Task.Delay(66).Wait();
+                Keylogger.PostKey(Keys.Enter);
+            }
         }
 
         private void UpdateDuplicates()
@@ -157,36 +178,6 @@ namespace TheBindingOfRandom
                 else
                     characterModel.DisabledOpacity = 1;
             }
-        }
-    }
-
-    public delegate void NewPlayStartedEventHandler(RandomizationModel sender, CharacterModel characterModel);
-
-    public class ClearPlayHistoryCommand : ICommand
-    {
-        public ClearPlayHistoryCommand(RandomizationModel randomizationModel)
-        {
-            RandomizationModel = randomizationModel;
-            RandomizationModel.NewPlayStarted += RandomizationModel_NewPlayStarted;
-        }
-
-        private void RandomizationModel_NewPlayStarted(RandomizationModel sender, CharacterModel characterModel)
-        {
-            CanExecuteChanged?.Invoke(this, null);
-        }
-
-        public event EventHandler CanExecuteChanged;
-        public RandomizationModel RandomizationModel { get; }
-
-        public bool CanExecute(object parameter) => RandomizationModel.Characters.Any(c => c.WasPlayed);
-
-        public void Execute(object parameter)
-        {
-            foreach (var characterModel in RandomizationModel.Characters)
-            {
-                characterModel.WasPlayed = false;
-            }
-            CanExecuteChanged?.Invoke(this, null);
         }
     }
 }

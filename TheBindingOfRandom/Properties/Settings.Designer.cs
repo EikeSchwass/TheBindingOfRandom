@@ -82,5 +82,17 @@ namespace TheBindingOfRandom.Properties {
                 this["StartKeyCombination"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool StartAfterSelection {
+            get {
+                return ((bool)(this["StartAfterSelection"]));
+            }
+            set {
+                this["StartAfterSelection"] = value;
+            }
+        }
     }
 }

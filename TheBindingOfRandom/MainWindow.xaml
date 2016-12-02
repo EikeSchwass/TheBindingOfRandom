@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:TheBindingOfRandom"
         xmlns:properties="clr-namespace:TheBindingOfRandom.Properties"
         mc:Ignorable="d"
-        Title="{Binding Path=Title, Source={x:Static properties:Settings.Default}}" Height="666" SizeToContent="Width"  ResizeMode="NoResize" WindowStyle="ToolWindow" FontFamily="Consolas" Background="Black">
+        Title="{Binding Path=Title, Source={x:Static properties:Settings.Default}}" Height="666" SizeToContent="Width"  ResizeMode="NoResize" WindowStyle="ToolWindow" FontFamily="Consolas" Background="Black" Icon="Images/icon.ico">
     <Window.DataContext>
         <local:RandomizationModel />
     </Window.DataContext>
     <DockPanel LastChildFill="True">
-        <Image DockPanel.Dock="Left" Source="Images/bgl.png" Stretch="Uniform" Margin="0,0,-200,0" />
-        <Image DockPanel.Dock="Right" Source="Images/bgr.png" Stretch="Uniform" Margin="-200,0,0,0" />
+        <Image DockPanel.Dock="Left" Source="Images/bgl.png" Stretch="Uniform" Margin="0,0,-300,0" />
+        <Image DockPanel.Dock="Right" Source="Images/bgr.png" Stretch="Uniform" Margin="-300,0,0,0" />
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -22,7 +22,20 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <ListView VerticalAlignment="Top" HorizontalAlignment="Center" ItemsSource="{Binding Path=Characters}" Background="#cc000000" Margin="50">
+            <ListView VerticalAlignment="Top" HorizontalAlignment="Center" ItemsSource="{Binding Path=Characters}" Background="#d0000000" Margin="50">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Focusable" Value="False" />
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <ContentPresenter />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel IsItemsHost="True" Orientation="Horizontal" Background="Transparent" />
@@ -30,7 +43,7 @@
                 </ListView.ItemsPanel>
                 <ListView.ItemTemplate>
                     <DataTemplate DataType="local:CharacterModel">
-                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="White" Background="Black" Style="{DynamicResource ImageCheckBoxStyle}">
+                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="White" Background="Black" Style="{DynamicResource ImageCheckBoxStyle}" MouseDown="UIElement_OnMouseDown">
                             <CheckBox.Resources>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="Text" Value="{Binding Text}" />
@@ -51,7 +64,8 @@
                 </ListView.ItemTemplate>
             </ListView>
             <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
-                <CheckBox Margin="5" IsChecked="{Binding PreventDuplicates}" Foreground="White" HorizontalAlignment="Center" BorderBrush="White" Background="Black">Prevent Duplicates</CheckBox>
+                <CheckBox Margin="5" IsChecked="{Binding StartAfterSelection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Foreground="White" HorizontalAlignment="Center" BorderBrush="White" Background="Black" Width="200">Start after selection</CheckBox>
+                <CheckBox Margin="5" IsChecked="{Binding PreventDuplicates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Foreground="White" HorizontalAlignment="Center" BorderBrush="White" Background="Black" Width="200">Prevent duplicates</CheckBox>
                 <Button Content="Clear play history" Foreground="White" Background="Black" BorderBrush="White" Margin="5" Command="{Binding ClearPlayHistoryCommand}" />
             </StackPanel>
             <StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">

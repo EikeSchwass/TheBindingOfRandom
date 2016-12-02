@@ -24,5 +24,16 @@ namespace TheBindingOfRandom
         {
             InitializeComponent();
         }
+
+        private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.RightButton != MouseButtonState.Pressed)
+                return;
+            var checkBox = (CheckBox)sender;
+            var characterModel = (CharacterModel)checkBox.DataContext;
+            characterModel.WasPlayed = !characterModel.WasPlayed;
+            var randomizationModel = (RandomizationModel)DataContext;
+            randomizationModel.ClearPlayHistoryCommand.CanExecuteChangedInvoke();
+        }
     }
 }

@@ -8,6 +8,7 @@ namespace TheBindingOfRandom
 {
     public class KeyCombinationChangedHandler : ICommand
     {
+        private const string ALPHANUMERIC = "ABCDEFGHIJKLMNOPQRSTUVWXYZÖÄÜ+*~#'-_.:,;<>|1234567890ß?\\!\"§$%&/()=²³{[]}°";
         private bool executing;
 
         public KeyCombinationChangedHandler(RandomizationModel randomizationModel)
@@ -45,18 +46,15 @@ namespace TheBindingOfRandom
         {
             if (!Executing)
                 return;
-            try
-            {
-                Application.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher.Invoke(() =>
+                                                  {
+                                                      char c = char.ToUpper((char)e.KeyValue);
+                                                      if (ALPHANUMERIC.Contains(c + ""))
                                                       {
-                                                          RandomizationModel.StartKeyCombination = "Ctrl+Alt+" + char.ToUpper((char)e.KeyValue);
+                                                          RandomizationModel.StartKeyCombination = "Ctrl+Alt+" + c;
                                                           Executing = false;
-                                                      });
-            }
-            catch (Exception ex)
-            {
-
-            }
+                                                      }
+                                                  });
         }
     }
 }

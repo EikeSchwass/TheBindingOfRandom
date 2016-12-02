@@ -107,6 +107,18 @@ namespace TheBindingOfRandom
                 if (value == wasPlayed)
                     return;
                 wasPlayed = value;
+                var playedCharacters = (Characters)Settings.Default.PlayedCharacters;
+                if (playedCharacters.HasFlag(Character))
+                {
+                    if (!value)
+                        Settings.Default.PlayedCharacters -= (long)Character;
+                }
+                else
+                {
+                    if (value)
+                        Settings.Default.PlayedCharacters += (long)Character;
+                }
+                Settings.Default.Save();
                 DisabledOpacity = !wasPlayed ? 1 : 0.25;
                 OnPropertyChanged();
             }

@@ -17,5 +17,8 @@
     <Setting Name="StartKeyCombination" Type="System.String" Scope="User">
       <Value Profile="(Default)">Ctrl+Alt+R</Value>
     </Setting>
+    <Setting Name="StartAfterSelection" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
