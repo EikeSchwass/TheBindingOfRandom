@@ -43,23 +43,26 @@
                 </ListView.ItemsPanel>
                 <ListView.ItemTemplate>
                     <DataTemplate DataType="local:CharacterModel">
-                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="White" Background="Black" Style="{DynamicResource ImageCheckBoxStyle}" MouseDown="UIElement_OnMouseDown">
-                            <CheckBox.Resources>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Text" Value="{Binding Text}" />
-                                    <Setter Property="Foreground" Value="White" />
-                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                </Style>
-                                <Style TargetType="Image">
-                                    <Setter Property="Source" Value="{Binding Path=ImageSource}" />
-                                    <Setter Property="Opacity" Value="{Binding Path=DisabledOpacity}" />
-                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                    <Setter Property="Width" Value="56" />
-                                    <Setter Property="Height" Value="66" />
-                                    <Setter Property="Stretch" Value="Uniform" />
-                                </Style>
-                            </CheckBox.Resources>
-                        </CheckBox>
+                        <StackPanel Orientation="Vertical">
+                            <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="White" Background="Black" Style="{DynamicResource ImageCheckBoxStyle}" MouseDown="UIElement_OnMouseDown">
+                                <CheckBox.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Text" Value="{Binding Text}" />
+                                        <Setter Property="Foreground" Value="White" />
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                    </Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Source" Value="{Binding Path=ImageSource}" />
+                                        <Setter Property="Opacity" Value="{Binding Path=DisabledOpacity}" />
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="Width" Value="56" />
+                                        <Setter Property="Height" Value="66" />
+                                        <Setter Property="Stretch" Value="Uniform" />
+                                    </Style>
+                                </CheckBox.Resources>
+                            </CheckBox>
+                            <Button Foreground="White" Margin="5">Disable</Button>
+                        </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

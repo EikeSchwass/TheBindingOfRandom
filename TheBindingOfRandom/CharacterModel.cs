@@ -14,6 +14,7 @@ namespace TheBindingOfRandom
         private bool isSelected;
         private string text;
         private bool wasPlayed;
+        private bool isAvailable;
 
         public CharacterModel(Characters character, bool wasPlayed)
         {
@@ -80,6 +81,29 @@ namespace TheBindingOfRandom
                 {
                     if (value)
                         Settings.Default.SelectedCharacters += (long)Character;
+                }
+                Settings.Default.Save();
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsAvailable
+        {
+            get { return isAvailable; }
+            set
+            {
+                if (value == isAvailable) return;
+                isAvailable = value;
+                var notAvailableCharacters = (Characters)Settings.Default.NotAvailableCharacters;
+                if (notAvailableCharacters.HasFlag(Character))
+                {
+                    if (!value)
+                        Settings.Default.NotAvailableCharacters -= (long)Character;
+                }
+                else
+                {
+                    if (value)
+                        Settings.Default.NotAvailableCharacters += (long)Character;
                 }
                 Settings.Default.Save();
                 OnPropertyChanged();

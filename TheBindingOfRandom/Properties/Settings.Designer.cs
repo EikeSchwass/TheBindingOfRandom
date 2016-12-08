@@ -94,5 +94,17 @@ namespace TheBindingOfRandom.Properties {
                 this["StartAfterSelection"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public long NotAvailableCharacters {
+            get {
+                return ((long)(this["NotAvailableCharacters"]));
+            }
+            set {
+                this["NotAvailableCharacters"] = value;
+            }
+        }
     }
 }
