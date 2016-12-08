@@ -59,6 +59,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ActivationButtonCommand.cs" />
     <Compile Include="CharacterModel.cs" />
     <Compile Include="ClearPlayHistoryCommand.cs" />
     <Compile Include="KeyCombinationChangedHandler.cs" />

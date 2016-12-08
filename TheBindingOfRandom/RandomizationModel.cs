@@ -138,7 +138,7 @@ namespace TheBindingOfRandom
             {
                 index = Random.Next(Characters.Count);
                 character = Characters[index];
-                if (character.IsSelected && !(PreventDuplicates && character.WasPlayed))
+                if (character.IsSelected && !(PreventDuplicates && character.WasPlayed) && character.IsAvailable)
                 {
                     break;
                 }
@@ -151,8 +151,8 @@ namespace TheBindingOfRandom
                     characterModel.WasPlayed = false;
                 }
             }
-            while (index < Characters.Count * 2 + 1)
-                index += Characters.Count + 1;
+            while (index < Characters.CountAvaiblable() * 2 + 1)
+                index += Characters.CountAvaiblable() + 1;
             for (int i = 0; i < index; i++)
             {
                 Keylogger.PostKey(Keys.Right);
@@ -171,13 +171,13 @@ namespace TheBindingOfRandom
             Settings.Default.PreventDuplicates = PreventDuplicates;
             Settings.Default.Save();
             var playedCharacters = (Characters)Settings.Default.PlayedCharacters;
-            foreach (var characterModel in Characters)
+            /*foreach (var characterModel in Characters)
             {
                 if (PreventDuplicates && playedCharacters.HasFlag(characterModel.Character))
                     characterModel.DisabledOpacity = 0.25;
                 else
                     characterModel.DisabledOpacity = 1;
-            }
+            }*/
         }
     }
 }

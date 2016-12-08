@@ -15,6 +15,7 @@ namespace TheBindingOfRandom
         private string text;
         private bool wasPlayed;
         private bool isAvailable;
+        private ActivationButtonCommand activationButtonCommand;
 
         public CharacterModel(Characters character, bool wasPlayed)
         {
@@ -23,6 +24,7 @@ namespace TheBindingOfRandom
             ImageSource = Character.GetImageSource();
             Text = character.GetName();
             IsSelected = ((Characters)Settings.Default.SelectedCharacters).HasFlag(character);
+            IsAvailable = !((Characters)Settings.Default.NotAvailableCharacters).HasFlag(character);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -92,20 +94,21 @@ namespace TheBindingOfRandom
             get { return isAvailable; }
             set
             {
-                if (value == isAvailable) return;
                 isAvailable = value;
                 var notAvailableCharacters = (Characters)Settings.Default.NotAvailableCharacters;
                 if (notAvailableCharacters.HasFlag(Character))
                 {
-                    if (!value)
+                    if (value)
                         Settings.Default.NotAvailableCharacters -= (long)Character;
                 }
                 else
                 {
-                    if (value)
+                    if (!value)
                         Settings.Default.NotAvailableCharacters += (long)Character;
                 }
                 Settings.Default.Save();
+                DisabledOpacity = !IsAvailable ? 0 : (!wasPlayed ? 1 : 0.25);
+                OnPropertyChanged(nameof(ActivationButtonText));
                 OnPropertyChanged();
             }
         }
@@ -143,10 +146,14 @@ namespace TheBindingOfRandom
                         Settings.Default.PlayedCharacters += (long)Character;
                 }
                 Settings.Default.Save();
-                DisabledOpacity = !wasPlayed ? 1 : 0.25;
+                DisabledOpacity = !IsAvailable ? 0 : (!wasPlayed ? 1 : 0.25);
                 OnPropertyChanged();
             }
         }
+
+        public ActivationButtonCommand ActivationButtonCommand => activationButtonCommand = (activationButtonCommand ?? new ActivationButtonCommand());
+
+        public string ActivationButtonText => IsAvailable ? "Disable" : "Enable";
 
         [NotifyPropertyChangedInvocator]
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

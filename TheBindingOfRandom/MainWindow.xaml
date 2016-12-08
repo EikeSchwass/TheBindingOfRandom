@@ -61,7 +61,7 @@
                                     </Style>
                                 </CheckBox.Resources>
                             </CheckBox>
-                            <Button Foreground="White" Margin="5">Disable</Button>
+                            <Button Foreground="White" Margin="5" Command="{Binding ActivationButtonCommand}" CommandParameter="{Binding}" Content="{Binding ActivationButtonText}" Width="60" ToolTip="You should disable characters if you haven't unlocked them yet, so the randomization can knows how many characters are in your roulette" />
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

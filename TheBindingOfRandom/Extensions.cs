@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -94,5 +96,7 @@ namespace TheBindingOfRandom
         {
             return new BitmapImage(new Uri($"/Images/{characters.ToString().ToLower()}.png", UriKind.RelativeOrAbsolute));
         }
+
+        public static int CountAvaiblable(this ObservableCollection<CharacterModel> source) => source.Count(c => c.IsAvailable);
     }
 }
