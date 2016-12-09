@@ -19,9 +19,6 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
             <ListView VerticalAlignment="Top" HorizontalAlignment="Center" ItemsSource="{Binding Path=Characters}" Background="#d0000000" Margin="50">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
